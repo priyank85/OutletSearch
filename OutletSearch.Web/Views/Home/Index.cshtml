@@ -1,0 +1,77 @@
+﻿@model OutletSearch.Service.ViewModels.SearchViewModel
+@{
+    ViewBag.Title = "Cision - Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <h2>
+            Contact search</h2>
+        <div>
+            @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { id = "search-form", @class = "form-inline" }))
+            {
+                <input type="text" name="searchterms" autocomplete="off" id="searchterms" class="form-control"
+                    placeholder="Enter search terms....." required />   
+                <button type="submit" class="btn btn-primary">
+                    Search</button>
+            }
+        </div>
+    </div>
+    @if (Model != null && Model.Contacts.Any())
+    {
+        <div class="row">
+            <h4 class="text-center text-success">@Model.Contacts.Count() result(s) found for search
+                term(s):
+                <mark>@string.Join(" ", Model.SearchTerms)</mark>
+            </h4>
+        </div>      
+        <div class="row">
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th class="contact-name">
+                            Contact Name
+                        </th>
+                        <th class="contact-title">
+                            Contact Title
+                        </th>
+                        <th class="outlet-name">
+                            Outlet Name
+                        </th>
+                        <th>
+                            Contact Profile
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Contacts)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContactFullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContactTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OutletName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContactProfile)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else if (Model != null && !Model.Contacts.Any())
+    {
+        <div class="row">
+            <h4 class="text-center text-danger">
+                No result(s) found for search term(s):
+                <mark>@string.Join(" ", Model.SearchTerms)</mark>
+            </h4>
+        </div>
+    }
+</div>
