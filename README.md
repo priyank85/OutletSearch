@@ -1,2 +1,2 @@
 # OutletSearch
-A very trivial application which searches on attribute on a generic contact entiry 
+A very trivial application which searches on certain attributes of a contact entiry.
